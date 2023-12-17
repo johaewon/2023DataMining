@@ -1,187 +1,123 @@
 # 2023 DataMining
 
 -----------------
+![image](https://github.com/johaewon/openpose-code/assets/108321733/8931a96b-1768-49b8-8d02-f6327966412d)
+![image](https://github.com/johaewon/openpose-code/assets/108321733/33cabae8-1c82-4f4c-bb09-72a68cf2c17d)
 
 [**실시간 특정 영역 진입 시 얼굴 모자이크 해제 시스템**]
 
 
 실시간 특정 영역 진입 시 얼굴 모자이크 해제 시스템은 딥러닝과 영상처리 기술을 사용하여 모자이크 처리 문제를 해결하는 시스템을 제안한다. 과거에는 모자이크 처리가 수동으로 이루어졌으나, 이 방식은 시간이 많이 걸리고 실수로 누락되는 경우가 발생할 수 있다. 이 시스템은 실시간으로 얼굴 모자이크를 자동으로 해제하는 인공지능 기반 CCTV 기술에 기반한다. OpenPose 모델을 사용하여 사람의 전신, 손, 얼굴, 발 등의 키포인트를 실시간으로 탐지한 후 영상 내 모든 사람에게 기본적으로 얼굴 모자이크 효과를 적용한다. 이후 OpenPose로 얻은 다리 영역의 확장된 박스와 특정 영역 사이의 IoU 값을 기준으로 모자이크 해제 이벤트를 결정한다. 이러한 시스템은 시시간 모자이크 처리를 자동화하여 사생활 침해 및 법적 문제를 예방하고, 효율적인 방송 제작을 가능하게 한다.
 
-It is **authored by** [**Ginés Hidalgo**](https://www.gineshidalgo.com), [**Zhe Cao**](https://people.eecs.berkeley.edu/~zhecao), [**Tomas Simon**](http://www.cs.cmu.edu/~tsimon), [**Shih-En Wei**](https://scholar.google.com/citations?user=sFQD3k4AAAAJ&hl=en), [**Yaadhav Raaj**](https://www.raaj.tech), [**Hanbyul Joo**](https://jhugestar.github.io), **and** [**Yaser Sheikh**](http://www.cs.cmu.edu/~yaser). It is **maintained by** [**Ginés Hidalgo**](https://www.gineshidalgo.com) **and** [**Yaadhav Raaj**](https://www.raaj.tech). OpenPose would not be possible without the [**CMU Panoptic Studio dataset**](http://domedb.perception.cs.cmu.edu). We would also like to thank all the people who [have helped OpenPose in any way](doc/09_authors_and_contributors.md).
+#### Paper
+> https://www.koreascience.or.kr/article/CFKO201924664108405.page
 
-
-
+#### 수상
 <p align="center">
-    <img src=".github/media/pose_face_hands.gif" width="480">
-    <br>
-    <sup>Authors <a href="https://www.gineshidalgo.com" target="_blank">Ginés Hidalgo</a> (left) and <a href="https://jhugestar.github.io" target="_blank">Hanbyul Joo</a> (right) in front of the <a href="http://domedb.perception.cs.cmu.edu" target="_blank">CMU Panoptic Studio</a></sup>
+  <img src="./image/수상_1.jpg" alt="금상수상" style="width:700px;"/>
+  <img src="./image/수상_2.jpg" alt="은상" style="width:400px;"/>
+  <img src="./image/수상_3.jpg" alt="금상" style="width:400px;"/>
 </p>
 
+#### 설명
+방송에서는 당사자의 동의 없이 얼굴을 노출 시키거나, 유해물질로 판단되는 물체의 노출을 금지하고 있다. 기존의 처리방식으로 편집자가 촬영된 영상을 직접 편집하거나, 촬영 시 가리개를 이용하는 방법을 사용한다. 이러한 방법은 번거롭고, 실수로 인해 얼굴이나 유해물질이 방송에 그대로 노출될 수 있다. 본 논문에서는 딥러닝 기반의 객체탐지 모델과 동일인 판단 모델을 사용하여 편집 과정을 자동으로 처리하고 후처리 뿐만 아니라 실시간 방송에서의 적용을 위해 추가적으로 객체추적 알고리즘을 도입하여 처리속도를 높이는 방안을 제시한다.
+
+#### 연구방법
+유해물질 모자이크 처리방식은 카메라로 입력받은 영상을 객체탐지 딥러닝 모델 중 하나인 YOLO를 이용해 객체를 찾아내고 모자이크 처리를 하는 방식을 이용한다. 사람의 경우 객체탐지는 유해물질과 동일하게 수행되지만, 특정 인물을 모자이크에서 제외시키기 위해 동일인 판단 딥러닝 모델인 FaceNet을 이용하여 제외시킬 인물을 판단한다. 그러나 매 프레임마다 FaceNet 처리과정의 반복으로 인해 속도저하가 발생했고 이를 해결하기 위해 객체추적 알고리즘인 MeanShift를 사용하여 FaceNet이 발생시키는 병목현상을 완화시켰다. 이러한 방법을 활용한다면 실시간 방송뿐만 아니라, 촬영 후 편집 과정에서 사람이 놓칠 수 있는 부분을 잡아낼 수 있으며, 영상편집 작업에 소요되는 시간을 단축할 수 있다.
+
+#### 정리
+* 실시간으로 특정 객체에 이미지 처리를 수행하는 시스템 입니다.   
+* 촬영 후 편집으로 수행했던 작업들을 실시간으로 처리할 수 있으므로 실시간 미디어 매체에 활용이 가능합니다.   
+* 임베디드 보드(Jetson tx1 board)에서 동작할 수 있습니다.   
+* `YOLO`와 `FaceNet`을 활용하여 구현하였습니다.
 
 
-## Contents
-1. [Results](#results)
-2. [Features](#features)
-3. [Related Work](#related-work)
-4. [Installation](#installation)
-5. [Quick Start Overview](#quick-start-overview)
-6. [Send Us Feedback!](#send-us-feedback)
-7. [Citation](#citation)
-8. [License](#license)
+***
 
-
-
-## Results
-### Whole-body (Body, Foot, Face, and Hands) 2D Pose Estimation
-<p align="center">
-    <img src=".github/media/dance_foot.gif" width="300">
-    <img src=".github/media/pose_face.gif" width="300">
-    <img src=".github/media/pose_hands.gif" width="300">
-    <br>
-    <sup>Testing OpenPose: (Left) <a href="https://www.youtube.com/watch?v=2DiQUX11YaY" target="_blank"><i>Crazy Uptown Funk flashmob in Sydney</i></a> video sequence. (Center and right) Authors <a href="https://www.gineshidalgo.com" target="_blank">Ginés Hidalgo</a> and <a href="http://www.cs.cmu.edu/~tsimon" target="_blank">Tomas Simon</a> testing face and hands</sup>
-</p>
-
-### Whole-body 3D Pose Reconstruction and Estimation
-<p align="center">
-    <img src=".github/media/openpose3d.gif" width="360">
-    <br>
-    <sup><a href="https://ziutinyat.github.io/" target="_blank">Tianyi Zhao</a> testing the OpenPose 3D Module</a></sup>
-</p>
-
-### Unity Plugin
-<p align="center">
-    <img src=".github/media/unity_main.png" width="300">
-    <img src=".github/media/unity_body_foot.png" width="300">
-    <img src=".github/media/unity_hand_face.png" width="300">
-    <br>
-    <sup><a href="https://ziutinyat.github.io/" target="_blank">Tianyi Zhao</a> and <a href="https://www.gineshidalgo.com" target="_blank">Ginés Hidalgo</a> testing the <a href="https://github.com/CMU-Perceptual-Computing-Lab/openpose_unity_plugin" target="_blank">OpenPose Unity Plugin</a></sup>
-</p>
-
-### Runtime Analysis
-We show an inference time comparison between the 3 available pose estimation libraries (same hardware and conditions): OpenPose, Alpha-Pose (fast Pytorch version), and Mask R-CNN. The OpenPose runtime is constant, while the runtime of Alpha-Pose and Mask R-CNN grow linearly with the number of people. More details [**here**](https://arxiv.org/abs/1812.08008).
+### 특정 인물을 제외한 모든 인물 모자이크
 
 <p align="center">
-    <img src=".github/media/openpose_vs_competition.png" width="360">
+<img src="./image/option_1_test.gif" alt="option_1"/>
 </p>
 
+***
 
+### 사물 모자이크
 
-## Features
-**Main Functionality**:
-- **2D real-time multi-person keypoint detection**:
-    - 15, 18 or **25-keypoint body/foot keypoint estimation**, including **6 foot keypoints**. **Runtime invariant to number of detected people**.
-    - **2x21-keypoint hand keypoint estimation**. **Runtime depends on number of detected people**. See [**OpenPose Training**](https://github.com/CMU-Perceptual-Computing-Lab/openpose_train) for a runtime invariant alternative.
-    - **70-keypoint face keypoint estimation**. **Runtime depends on number of detected people**. See [**OpenPose Training**](https://github.com/CMU-Perceptual-Computing-Lab/openpose_train) for a runtime invariant alternative.
-- [**3D real-time single-person keypoint detection**](doc/advanced/3d_reconstruction_module.md):
-    - 3D triangulation from multiple single views.
-    - Synchronization of Flir cameras handled.
-    - Compatible with Flir/Point Grey cameras.
-- [**Calibration toolbox**](doc/advanced/calibration_module.md): Estimation of distortion, intrinsic, and extrinsic camera parameters.
-- **Single-person tracking** for further speedup or visual smoothing.
+<p align="center">
+<img src="./image/option_2_test.gif" alt="option_2"/>
+</p>
 
-**Input**: Image, video, webcam, Flir/Point Grey, IP camera, and support to add your own custom input source (e.g., depth camera).
+***
 
-**Output**: Basic image + keypoint display/saving (PNG, JPG, AVI, ...), keypoint saving (JSON, XML, YML, ...), keypoints as array class, and support to add your own custom output code (e.g., some fancy UI).
+### 임베디드 보드 테스트 (Jetson TX1 board)
 
-**OS**: Ubuntu (20, 18, 16, 14), Windows (10, 8), Mac OSX, Nvidia TX2.
+<p align="center">
+  <img src="./image/JTX1_devkit.png" alt="JTX1_devkit" style="width:500px;"/>
+<img src="./image/board_test_image.png" alt="board_test_image" style="width:500px;"/>
+<img src="./image/board_test.gif" alt="board_test"/>
+</p>
 
-**Hardware compatibility**: CUDA (Nvidia GPU), OpenCL (AMD GPU), and non-GPU (CPU-only) versions.
-
-**Usage Alternatives**:
-- [**Command-line demo**](doc/01_demo.md) for built-in functionality.
-- [**C++ API**](doc/04_cpp_api.md/) and [**Python API**](doc/03_python_api.md) for custom functionality. E.g., adding your custom inputs, pre-processing, post-posprocessing, and output steps.
-
-For further details, check the [major released features](doc/07_major_released_features.md) and [release notes](doc/08_release_notes.md) docs.
-
-
-
-## Related Work
-- [**OpenPose training code**](https://github.com/CMU-Perceptual-Computing-Lab/openpose_train)
-- [**OpenPose foot dataset**](https://cmu-perceptual-computing-lab.github.io/foot_keypoint_dataset/)
-- [**OpenPose Unity Plugin**](https://github.com/CMU-Perceptual-Computing-Lab/openpose_unity_plugin)
-- OpenPose papers published in **IEEE TPAMI and CVPR**. Cite them in your publications if OpenPose helps your research! (Links and more details in the [Citation](#citation) section below).
-
-
-
-## Installation
-If you want to use OpenPose without installing or writing any code, simply [download and use the latest Windows portable version of OpenPose](doc/installation/0_index.md#windows-portable-demo)!
-
-Otherwise, you could [build OpenPose from source](doc/installation/0_index.md#compiling-and-running-openpose-from-source). See the [installation doc](doc/installation/0_index.md) for all the alternatives.
-
-
-
-## Quick Start Overview
-Simply use the OpenPose Demo from your favorite command-line tool (e.g., Windows PowerShell or Ubuntu Terminal). E.g., this example runs OpenPose on your webcam and displays the body keypoints:
+## Run
+> ⛔ github 정책으로 인해 100MB 이상의 weight file은 포함되지 않았습니다. (weight file 없이 실행 불가) ⛔ 
+#### 사물 모자이크
 ```
-# Ubuntu
-./build/examples/openpose/openpose.bin
-```
-```
-:: Windows - Portable Demo
-bin\OpenPoseDemo.exe --video examples\media\video.avi
+# step 1
+./cap.bash object
 ```
 
-You can also add any of the available flags in any order. E.g., the following example runs on a video (`--video {PATH}`), enables face (`--face`) and hands (`--hand`), and saves the output keypoints on JSON files on disk (`--write_json {PATH}`).
+#### 특정 인물 제외 모든 인물 모자이크
 ```
-# Ubuntu
-./build/examples/openpose/openpose.bin --video examples/media/video.avi --face --hand --write_json output_json_folder/
+# step 1. 특정 인물 얼굴 캡쳐
+./cap.bash crop
+
+# step 2. FaceNet 학습
+./cap.bash train
+
+# step 3. 실행
+./cap.bash face
 ```
-```
-:: Windows - Portable Demo
-bin\OpenPoseDemo.exe --video examples\media\video.avi --face --hand --write_json output_json_folder/
-```
-
-Optionally, you can also extend OpenPose's functionality from its Python and C++ APIs. After [installing](doc/installation/0_index.md) OpenPose, check its [official doc](doc/00_index.md) for a quick overview of all the alternatives and tutorials.
 
 
+## 세부 구현 내용
+#### YOLO-FaceNet 통신
 
-## Send Us Feedback!
-Our library is open source for research purposes, and we want to improve it! So let us know (create a new GitHub issue or pull request, email us, etc.) if you...
-1. Find/fix any bug (in functionality or speed) or know how to speed up or improve any part of OpenPose.
-2. Want to add/show some cool functionality/demo/project made on top of OpenPose. We can add your project link to our [Community-based Projects](doc/10_community_projects.md) section or even integrate it with OpenPose!
+<p align="center">
+<img src="./image/shared_memory.png" alt="model_connection" style="width:500px;"/>
+</p>
 
+YOLO는 `C`, FaceNet은 `Python`으로 구현되어 있으므로 입출력값을 공유하기 위한 공유 메모리를 사용합니다.
 
+#### MeanShift
 
-## Citation
-Please cite these papers in your publications if OpenPose helps your research. All of OpenPose is based on [OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields](https://arxiv.org/abs/1812.08008), while the hand and face detectors also use [Hand Keypoint Detection in Single Images using Multiview Bootstrapping](https://arxiv.org/abs/1704.07809) (the face detector was trained using the same procedure as the hand detector).
+병목 현상 방지를 위해 30fps 중 1fps는 FaceNet, 29fps는 MeanShift 알고리즘을 사용하였습니다.
 
-    @article{8765346,
-      author = {Z. {Cao} and G. {Hidalgo Martinez} and T. {Simon} and S. {Wei} and Y. A. {Sheikh}},
-      journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
-      title = {OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields},
-      year = {2019}
-    }
+#### 임베디드 환경
 
-    @inproceedings{simon2017hand,
-      author = {Tomas Simon and Hanbyul Joo and Iain Matthews and Yaser Sheikh},
-      booktitle = {CVPR},
-      title = {Hand Keypoint Detection in Single Images using Multiview Bootstrapping},
-      year = {2017}
-    }
-
-    @inproceedings{cao2017realtime,
-      author = {Zhe Cao and Tomas Simon and Shih-En Wei and Yaser Sheikh},
-      booktitle = {CVPR},
-      title = {Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields},
-      year = {2017}
-    }
-
-    @inproceedings{wei2016cpm,
-      author = {Shih-En Wei and Varun Ramakrishna and Takeo Kanade and Yaser Sheikh},
-      booktitle = {CVPR},
-      title = {Convolutional pose machines},
-      year = {2016}
-    }
-
-Paper links:
-- OpenPose: Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields:
-    - [IEEE TPAMI](https://ieeexplore.ieee.org/document/8765346)
-    - [ArXiv](https://arxiv.org/abs/1812.08008)
-- [Hand Keypoint Detection in Single Images using Multiview Bootstrapping](https://arxiv.org/abs/1704.07809)
-- [Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields](https://arxiv.org/abs/1611.08050)
-- [Convolutional Pose Machines](https://arxiv.org/abs/1602.00134)
+YOLO(Tiny Yolo)는 임베디드 보드로 수행, 30fps 마다 PC와 Socket 통신하여 연산을 요청, FaceNet의 결과를 제공받습니다.
 
 
+## Development Environment
+#### OS   
+* Linux   
+#### Language
+* C   
+* Python   
+#### GPU   
+|PC|TX1|
+|---|---|
+|NVIDIA CUDA® Cores-4352|256-core NVIDIA Maxwell™|
 
-## License
-OpenPose is freely available for free non-commercial use, and may be redistributed under these conditions. Please, see the [license](./LICENSE) for further details. Interested in a commercial license? Check this [FlintBox link](https://cmu.flintbox.com/#technologies/b820c21d-8443-4aa2-a49f-8919d93a8740). For commercial queries, use the `Contact` section from the [FlintBox link](https://cmu.flintbox.com/#technologies/b820c21d-8443-4aa2-a49f-8919d93a8740) and also send a copy of that message to [Yaser Sheikh](mailto:yaser@cs.cmu.edu).
+## Reference
+#### Site
+* [YOLOv3](https://pjreddie.com/darknet/yolo/)
+* [Darknet YOLO분석](https://pgmrlsh.tistory.com/5?category=766787)
+#### Paper
+* [YOLOv3](https://arxiv.org/pdf/1804.02767.pdf)
+* [FaceNet](https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Schroff_FaceNet_A_Unified_2015_CVPR_paper.pdf)
+#### Code
+* https://github.com/pjreddie/darknet
+* https://github.com/davidsandberg/facenet
+* https://github.com/shanren7/real_time_face_recognition
+* https://github.com/msindev/Facial-Recognition-Using-FaceNet-Siamese-One-Shot-Learning
+
