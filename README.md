@@ -1,16 +1,11 @@
 # 2023 DataMining
- 
-<div align="center">
-    <img src=".github/Logo_main_black.png" width="300">
-</div>
 
 -----------------
 
-| **Build Type**   |`Linux`           |`MacOS`           |`Windows`         |
-| :---:            | :---:            | :---:            | :---:            |
-| **Build Status** | [![Status](https://github.com/CMU-Perceptual-Computing-Lab/openpose/workflows/CI/badge.svg)](https://github.com/CMU-Perceptual-Computing-Lab/openpose/actions) | [![Status](https://github.com/CMU-Perceptual-Computing-Lab/openpose/workflows/CI/badge.svg)](https://github.com/CMU-Perceptual-Computing-Lab/openpose/actions) | [![Status](https://ci.appveyor.com/api/projects/status/5leescxxdwen77kg/branch/master?svg=true)](https://ci.appveyor.com/project/gineshidalgo99/openpose/branch/master) |
+[**실시간 특정 영역 진입 시 얼굴 모자이크 해제 시스템**]
 
-[**OpenPose**](https://github.com/CMU-Perceptual-Computing-Lab/openpose) has represented the **first real-time multi-person system to jointly detect human body, hand, facial, and foot keypoints (in total 135 keypoints) on single images**.
+
+실시간 특정 영역 진입 시 얼굴 모자이크 해제 시스템은 딥러닝과 영상처리 기술을 사용하여 모자이크 처리 문제를 해결하는 시스템을 제안한다. 과거에는 모자이크 처리가 수동으로 이루어졌으나, 이 방식은 시간이 많이 걸리고 실수로 누락되는 경우가 발생할 수 있다. 이 시스템은 실시간으로 얼굴 모자이크를 자동으로 해제하는 인공지능 기반 CCTV 기술에 기반한다. OpenPose 모델을 사용하여 사람의 전신, 손, 얼굴, 발 등의 키포인트를 실시간으로 탐지한 후 영상 내 모든 사람에게 기본적으로 얼굴 모자이크 효과를 적용한다. 이후 OpenPose로 얻은 다리 영역의 확장된 박스와 특정 영역 사이의 IoU 값을 기준으로 모자이크 해제 이벤트를 결정한다. 이러한 시스템은 시시간 모자이크 처리를 자동화하여 사생활 침해 및 법적 문제를 예방하고, 효율적인 방송 제작을 가능하게 한다.
 
 It is **authored by** [**Ginés Hidalgo**](https://www.gineshidalgo.com), [**Zhe Cao**](https://people.eecs.berkeley.edu/~zhecao), [**Tomas Simon**](http://www.cs.cmu.edu/~tsimon), [**Shih-En Wei**](https://scholar.google.com/citations?user=sFQD3k4AAAAJ&hl=en), [**Yaadhav Raaj**](https://www.raaj.tech), [**Hanbyul Joo**](https://jhugestar.github.io), **and** [**Yaser Sheikh**](http://www.cs.cmu.edu/~yaser). It is **maintained by** [**Ginés Hidalgo**](https://www.gineshidalgo.com) **and** [**Yaadhav Raaj**](https://www.raaj.tech). OpenPose would not be possible without the [**CMU Panoptic Studio dataset**](http://domedb.perception.cs.cmu.edu). We would also like to thank all the people who [have helped OpenPose in any way](doc/09_authors_and_contributors.md).
 
