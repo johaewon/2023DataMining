@@ -19,15 +19,6 @@
 
 
 
-### 사물 모자이크
-
-<p align="center">
-<img src="./image/option_2_test.gif" alt="option_2"/>
-</p>
-
-***
-
-
 
 ## Run
 
