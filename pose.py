@@ -35,12 +35,12 @@ net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
 
 
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-video_path = "./sample_video/sample5.mp4"
+video_path = "./sample_video/sample.mp4"
 
 cap = cv2.VideoCapture(video_path)
 
 video_w, video_h, video_fps = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)), float(cap.get(cv2.CAP_PROP_FPS))
-video = cv2.VideoWriter("./result/" + "openpose_result6.avi", fourcc, video_fps, (video_w, video_h))
+video = cv2.VideoWriter("./result/" + "openpose_result.avi", fourcc, video_fps, (video_w, video_h))
 
 
 inputWidth=320;
