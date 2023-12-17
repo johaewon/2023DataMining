@@ -32,7 +32,7 @@
 ## Run
 
 
-#### OpenPose 실행
+### OpenPose 실행
 ```
 https://github.com/CMU-Perceptual-Computing-Lab/openpose
 ```
@@ -44,6 +44,12 @@ https://github.com/CMU-Perceptual-Computing-Lab/openpose
 python pose_webcam.py
 ```
 
+### 사용된 video, 결과물
+'''
+사용된 비디오와 결과물은
+sample_vido 폴더와
+result 폴더에 저장되어 있습니다.
+'''
 
 ## 필요한 패키지
 
